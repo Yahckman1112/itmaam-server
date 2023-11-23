@@ -1,0 +1,25 @@
+{
+  "name": "alitmaam-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/lodash": "^4.14.202",
+    "@types/mongoose": "^5.11.97",
+    "express": "^4.18.2",
+    "joi-browser": "^13.4.0",
+    "lodash": "^4.17.21",
+    "mongoose": "^8.0.1"
+  }
+}
