@@ -3,11 +3,15 @@ import mongoose from "mongoose";
 const app = express();
 import packages from './routes/packages'
 import news from './routes/news'
+import applicants from './routes/applicants'
+import users from './routes/user'
+import auth from './routes/auth'
 
 app.use(express.json());
 app.use('/api/packages', packages)
 app.use('/api/news', news)
-
+app.use('/api/applicants', applicants )
+app.use('/api/auth', auth )
 
 
 

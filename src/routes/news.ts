@@ -48,7 +48,7 @@ router.put("/:id", async (req: Request, res: Response) => {
 router.delete("/:id", async (req, res) => {
   try {
     const news = await New.findByIdAndDelete(req.params.id);
-    if (!news) return res.status(404).send("the package is unavailable");
+    if (!news) return res.status(404).send("the news is unavailable");
     res.send(news);
   } catch (error) {
     console.log(error);
