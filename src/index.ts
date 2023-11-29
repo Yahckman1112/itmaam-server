@@ -1,3 +1,4 @@
+require('express-async-errors')
 import express from "express";
 import mongoose from "mongoose";
 const app = express();
@@ -6,13 +7,16 @@ import news from './routes/news'
 import applicants from './routes/applicants'
 import users from './routes/user'
 import auth from './routes/auth'
+import error from "./middleware/error";
 
 app.use(express.json());
 app.use('/api/packages', packages)
 app.use('/api/news', news)
 app.use('/api/applicants', applicants )
+app.use('/api/users', users )
 app.use('/api/auth', auth )
 
+app.use(error)
 
 
 
@@ -23,5 +27,6 @@ mongoose
 
 
 
-const port = 5000;
-app.listen(port, () => `listening on port ${port}`);
+  const port = 5000;
+  app.listen(port, () => console.log(`listening on port ${port}`));
+  

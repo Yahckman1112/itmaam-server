@@ -8,10 +8,14 @@ const userSchema = new mongoose.Schema<UserProps>({
   userName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  isAdmin: Boolean,
 });
 
 userSchema.methods.generateAuthToken = function (this: UserProps) {
-  const token = jwt.sign({ _id: this._id, username: this.userName }, "12345");
+  const token = jwt.sign(
+    { _id: this._id, username: this.userName, isAdmin: this.isAdmin },
+    "12345"
+  );
 
   return token;
 };
