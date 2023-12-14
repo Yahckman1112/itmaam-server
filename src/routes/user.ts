@@ -6,11 +6,12 @@ import _ from 'lodash'
 import auth from "../middleware/auth";
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("User");
+router.get("/", async(req, res) => {
+  const users = await User.find()
+  res.send(users);
 });
 
-router.post("/", auth, async (req: Request, res: Response, next) => {
+router.post("/",  async (req: Request, res: Response, next) => {
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -22,6 +23,7 @@ router.post("/", auth, async (req: Request, res: Response, next) => {
   
     user = new User({
       fullName: req.body.fullName,
+      role: req.body.role,
       userName: req.body.userName,
       email: req.body.email,
       password: req.body.password,
@@ -34,7 +36,7 @@ router.post("/", auth, async (req: Request, res: Response, next) => {
 
     const token = user.generateAuthToken()
   
-    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'fullName', 'userName', 'email']));
+    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'fullName', 'userName', 'email','role']));
     console.log(token);
 
     next()

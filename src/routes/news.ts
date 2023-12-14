@@ -2,6 +2,7 @@ import express from "express";
 import { Request, Response } from "express";
 import _ from "lodash";
 import { New, validate } from "../model/news";
+import auth from "../middleware/auth";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -10,13 +11,13 @@ router.get("/", async (req, res) => {
   res.send(news);
 });
 
-router.get("/:id",async (req, res) => {
+router.get("/:id",  async (req, res) => {
   const news = await New.findById(req.params.id);
   if (!news) return res.status(400).send("The specific id is not available");
   res.send(news);
 });
 
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", auth, async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -28,7 +29,7 @@ router.post("/", async (req: Request, res: Response) => {
   res.send(news);
 });
 
-router.put("/:id", async (req: Request, res: Response) => {
+router.put("/:id", auth,  async (req: Request, res: Response) => {
   const news = await New.findByIdAndUpdate(
     req.params.id,
     {
@@ -45,7 +46,7 @@ router.put("/:id", async (req: Request, res: Response) => {
   res.send(news);
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const news = await New.findByIdAndDelete(req.params.id);
     if (!news) return res.status(404).send("the news is unavailable");

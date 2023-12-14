@@ -3,9 +3,13 @@ import { ApplicantsProps } from "../interfaces/interfaces";
 const Joi = require("joi-browser");
 
 const applicantsSchema = new mongoose.Schema<ApplicantsProps>({
-  pronoun:{type:String},
+  applicantsId: { type: String, required: true },
+  pronoun: { type: String },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
+  gender: { type: String, required: true },
+  package: { type: String, required: true },
+
   email: { type: String, required: true, unique: true },
   phone: { type: Number, required: true },
 });
@@ -17,9 +21,12 @@ export const validateApplicants = (applicants: ApplicantsProps) => {
     pronoun: Joi.string(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
+    gender: Joi.string().required(),
+    package: Joi.string().required(),
     email: Joi.string().required().email(),
     phone: Joi.number().required(),
   });
+
 
   return schema.validate(applicants);
 };
