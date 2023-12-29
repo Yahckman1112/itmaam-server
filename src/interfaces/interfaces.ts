@@ -1,4 +1,5 @@
 export interface PackageProps {
+  _id: any;
   packageName: string;
   makkahHotelName: string;
   madinahHotelName: string;
