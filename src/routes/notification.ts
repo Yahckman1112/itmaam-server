@@ -19,5 +19,17 @@ router.post("/", async (req, res) => {
   res.send(notify);
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const notify = await Notification.findByIdAndDelete(req.params.id);
+    if (!notify) return res.status(404).send("the package is unavailable");
+    res.send(notify);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+
 
 export default router;

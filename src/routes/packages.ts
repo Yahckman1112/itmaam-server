@@ -5,6 +5,7 @@ import _ from "lodash";
 import { PackageProps } from "../interfaces/interfaces";
 const router = express.Router();
 
+
 router.get("/", async (req: Request, res: Response, next) => {
   try {
     const packages = await Package.find();
@@ -30,20 +31,22 @@ router.get("/:id", async (req: Request, res: Response) => {
 router.post("/", async (req: Request, res: Response, next: any) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+  const packgs = await  Package.find()
 
   try {
     const packages = new Package(
-      _.pick(req.body, [
-        "packageName",
-        "makkahHotelName",
-        "madinahHotelName",
-        "time",
-        "registeredClient",
-        "totalSpace",
-        "price",
-        "nullPrice",
-        "overview",
-      ])
+      {
+      
+        packageName: req.body.packageName,
+        makkahHotelName: req.body.makkahHotelName,
+        madinahHotelName: req.body.madinahHotelName,
+        time: req.body.time,
+        registeredClient: packgs.length +1,
+        totalSpace: req.body.totalSpace,
+        price: req.body.price,
+        nullPrice: 500,
+        overview: req.body.overview,
+      }
     );
     await packages.save();
     res.send(packages);
@@ -57,6 +60,7 @@ router.put("/:id", async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  const packgs = await  Package.find()
   const packages = await Package.findByIdAndUpdate(
     req.params.id,
     {
@@ -64,11 +68,11 @@ router.put("/:id", async (req: Request, res: Response) => {
         packageName: req.body.packageName,
         makkahHotelName: req.body.makkahHotelName,
         madinahHotelName: req.body.madinahHotelName,
-        time: req.body.time,
-        registeredClient: req.body.registeredClient,
+        registeredClient: packgs.length +1,
         totalSpace: req.body.totalSpace,
         price: req.body.price,
-        nullPrice: req.body.nullPrice,
+        nullPrice: 500,
+        time: req.body.time,
         overview: req.body.overview,
       },
     },
